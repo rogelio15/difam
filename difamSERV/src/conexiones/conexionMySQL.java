@@ -32,7 +32,7 @@ public class conexionMySQL {
     private String IP = "127.0.0.1";
     private String BD = "comdifam";
     private String USUARIO = "root";
-    private String CONTRA = "comdifam";
+    private String CONTRA = "mysql123";
     private String PUERTO = "3306";
 
     public void analizaarchivo() {
@@ -61,8 +61,8 @@ public class conexionMySQL {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             analizaarchivo();
-//            conexion = DriverManager.getConnection("jdbc:mysql://" + IP + ":" + PUERTO + "/" + BD, USUARIO, CONTRA);
-            conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/comdifam", "root", "difam");
+            //conexion = DriverManager.getConnection("jdbc:mysql://" + IP + ":" + PUERTO + "/" + BD, USUARIO, CONTRA);
+            conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/comdifam", "root", "mysql123");
             System.out.println("BIENVIENIDOS a la conexion");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error de Conexion con el Servidor");

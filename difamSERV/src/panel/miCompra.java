@@ -857,7 +857,7 @@ public class miCompra extends javax.swing.JPanel {
         Double valorTotal = 0.00;
         for (int i = 0; i < tabla.getRowCount(); i++) {
 
-            valorTotal += parseDouble(tabla.getModel().getValueAt(i, 2).toString()) * parseDouble(tabla.getModel().getValueAt(i, 3).toString());
+            valorTotal += parseDouble(tabla.getModel().getValueAt(i, 3).toString()) * parseDouble(tabla.getModel().getValueAt(i, 4).toString());
         }
         lblSubTotal.setText("$ " + String.format("%10.2f", valorTotal));
         montoT = valorTotal;
@@ -921,8 +921,8 @@ public class miCompra extends javax.swing.JPanel {
         if (operacion == 1) {
             System.out.println("Se obtitne los impuestos y se calcula el precio");
             String id = busqueda.get("idProducto").toString();
-            System.out.println("id : " + id);
-            impuestos = frmPrincipal.miConex.ObtenerImpuestos("where idImpuesto in ("  + id + ")", 1);
+            String datos = "select idImpuesto from producto_impuesto where idProducto = '"+id+"'";
+            impuestos = frmPrincipal.miConex.ObtenerImpuestos("where idImpuesto in ("+datos+")", 1);
             
             for (Double impuesto : impuestos) {
                 System.out.println("Valor que se devuelve: " + impuesto);
@@ -970,7 +970,8 @@ public class miCompra extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Registro!!!");
         }
-        llenarTablaInvt(fecha);
+        //llenarTablaInvt(fecha);
+        llenarTabla();
         verificaTotal();
     }//GEN-LAST:event_btnCorregirActionPerformed
 
@@ -1017,6 +1018,7 @@ public class miCompra extends javax.swing.JPanel {
         System.out.println("traeImpuesto Nuevo: " + traeImpuesto);
         if (traeImpuesto) {
             System.out.println("no se calcula el precio con impuesto");
+            
         } else {
             System.out.println("Se calcula el precio con impuesto");
             txtPCI.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPC.getText()) * 1.16)).trim());
@@ -1037,27 +1039,28 @@ public class miCompra extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPCKeyReleased
 
     public void calcularUtilidad() {
-        vn = Double.parseDouble(txtPCI.getText());
+        
         //txtPCI.setText(String.format("%10.2f", Double.parseDouble(txtPC.getText()) * 1.16).trim());
 
         System.out.println("PCI: " + txtPCI.getText());
         //txtPProtec.setText(String.format("%10.2f", Double.parseDouble(txtPCI.getText()) * 1.15).trim());
-        lblPProtec.setText(utilidad(txtPProtec.getText(), 1));
+        lblPProtec.setText(utilidad(txtPProtec.getText().trim(), 1));
         System.out.println("precio proteccion" + lblPProtec.getText());
         //txtPMin.setText(String.format("%10.2f", Double.parseDouble(txtPCI.getText()) * 1.17).trim());
-        lblPMin.setText(utilidad(txtPMin.getText(), 1));
+        lblPMin.setText(utilidad(txtPMin.getText().trim(), 1));
         System.out.println("precio minimo" + txtPMin.getText());
         //txtPProm.setText(String.format("%10.2f", Double.parseDouble(txtPCI.getText()) * 1.20).trim());
-        lblPProm.setText(utilidad(txtPProm.getText(), 1));
+        lblPProm.setText(utilidad(txtPProm.getText().trim(), 1));
         System.out.println("precio promedio" + lblPProm.getText());
         //txtPMax.setText(String.format("%10.2f", Double.parseDouble(txtPMin.getText()) * 1.25).trim());
-        lblPMax.setText(utilidad(txtPMax.getText(), 1));
+        lblPMax.setText(utilidad(txtPMax.getText().trim(), 1));
         System.out.println("precio maximo" + txtPMax.getText());
         //txtPVGP.setText(String.format("%10.2f", Double.parseDouble(txtPMax.getText()) / Double.parseDouble(txtCantPaq.getText())).trim());
 
     }
 
     public String utilidad(String valorPorcentual, int op) {
+        vn = Double.parseDouble(txtPCI.getText());
         double vp = Double.parseDouble(valorPorcentual);
         double resultado = 0;
         if (op == 1) {

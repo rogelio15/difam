@@ -429,10 +429,10 @@ public class miVenta_1 extends javax.swing.JPanel {
         Double importe = 0.00;
         for (int i = 0; i < tabla.getRowCount(); i++) {
             System.out.println("valor de i: " + i);
-            importe = Double.parseDouble(remmplazaCaracter(tabla.getModel().getValueAt(i, 2).toString()).trim()) * Double.parseDouble(remmplazaCaracter(tabla.getModel().getValueAt(i, 5).toString()).trim());
+            importe = Double.parseDouble(tabla.getModel().getValueAt(i, 2).toString().trim()) * Double.parseDouble(tabla.getModel().getValueAt(i, 5).toString().trim());
             valorTotal += importe;
-            System.out.println("precio: " + remmplazaCaracter(String.format("%10.2f", importe)));
-            tabla.getModel().setValueAt(remmplazaCaracter(String.format("%10.2f", importe)), i, 6);
+            System.out.println("precio: " + String.format("%10.2f", importe));
+            tabla.getModel().setValueAt(String.format("%10.2f", importe), i, 6);
             importe = 0.00;
         }
         
@@ -470,13 +470,13 @@ public class miVenta_1 extends javax.swing.JPanel {
     }
     
       //mètodo para reemplazar las "," en los valores double.
-    public String remmplazaCaracter(String campo) {
-        String caracter = "";
-        if (campo.contains(",")) {
-            caracter = campo.replace(',', '.');
-        }
-        return caracter;
-    }
+//    public String remmplazaCaracter(String campo) {
+//        String caracter = "";
+//        if (campo.contains(",")) {
+//            caracter = campo.replace(',', '.');
+//        }
+//        return caracter;
+//    }
 
     public void llenarCuadros() {
 
