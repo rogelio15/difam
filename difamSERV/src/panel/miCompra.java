@@ -32,7 +32,8 @@ public class miCompra extends javax.swing.JPanel {
     public ImageIcon defaultIcon;
     boolean mezcla = false;
     miUtilidades mp;
-    private boolean traeImpuesto;
+    private boolean traeImpuesto = false;
+    ArrayList<Double> impuestos;
 
     public miCompra() {
         initComponents();
@@ -361,12 +362,17 @@ public class miCompra extends javax.swing.JPanel {
 
         txtPC.setFont(new java.awt.Font("Lao UI", 0, 11)); // NOI18N
         txtPC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPC.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPCKeyReleased(evt);
+        txtPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPCActionPerformed(evt);
             }
+        });
+        txtPC.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPCKeyTyped(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPCKeyReleased(evt);
             }
         });
 
@@ -383,12 +389,17 @@ public class miCompra extends javax.swing.JPanel {
 
         txtPCI.setFont(new java.awt.Font("Lao UI", 0, 11)); // NOI18N
         txtPCI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPCI.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPCIKeyReleased(evt);
+        txtPCI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPCIActionPerformed(evt);
             }
+        });
+        txtPCI.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPCIKeyTyped(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPCIKeyReleased(evt);
             }
         });
 
@@ -876,8 +887,8 @@ public class miCompra extends javax.swing.JPanel {
                 traeImpuesto = true;
                 System.out.println("TraeImpuesto: " + traeImpuesto);
                 txtPC.setEnabled(false);
-                System.out.println("Entando consulta impuesto");
-                System.out.println("Precio compra: " + txtPC.getText());
+                txtPCI.setEnabled(true);
+                txtPCI.requestFocus();
                 //obtener todos los impuestos que trae el producto
                 asignarPrecios(busqueda, 1);
                 //txtPCI.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPC.getText()) * 1.16)).trim());
@@ -901,8 +912,8 @@ public class miCompra extends javax.swing.JPanel {
     }
 
     public void asignarPrecios(HashMap busqueda, int operacion) {
-        System.out.println("Asignando precios");
-        ArrayList<Double> impuestos = new ArrayList<>();
+        impuestos = new ArrayList<>();
+
         txtCodeDIFAM.setText(busqueda.get("codEmpresa").toString());
         txtDesc.setText(busqueda.get("nombreProd").toString());
         txtCat.setText(busqueda.get("nombreCat").toString());
@@ -921,15 +932,15 @@ public class miCompra extends javax.swing.JPanel {
         if (operacion == 1) {
             System.out.println("Se obtitne los impuestos y se calcula el precio");
             String id = busqueda.get("idProducto").toString();
-            String datos = "select idImpuesto from producto_impuesto where idProducto = '"+id+"'";
-            impuestos = frmPrincipal.miConex.ObtenerImpuestos("where idImpuesto in ("+datos+")", 1);
-            
+            String datos = "select idImpuesto from producto_impuesto where idProducto = '" + id + "'";
+            impuestos = frmPrincipal.miConex.ObtenerImpuestos("where idImpuesto in (" + datos + ")", 1);
+            double precioCImp = Double.parseDouble(txtPC.getText());
             for (Double impuesto : impuestos) {
-                System.out.println("Valor que se devuelve: " + impuesto);
+                precioCImp = precioCImp * impuesto;
             }
-            
-            txtPCI.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPC.getText()) * 1.16)).trim());
-            
+
+            txtPCI.setText(String.format("%10.2f", precioCImp));
+
         } else {
             txtPCI.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPC.getText()))).trim());
         }
@@ -965,7 +976,6 @@ public class miCompra extends javax.swing.JPanel {
                 System.out.println("tabla: " + tabla.getModel().getValueAt(tabla.getSelectedRow(), 0));
                 System.out.println("id: " + frmPrincipal.habilitacion.getIdExp());
                 frmPrincipal.miConex.eliminaRegistro("compra_producto", "idproducto", tabla.getModel().getValueAt(tabla.getSelectedRow(), 0) + "' and idCompra='" + frmPrincipal.habilitacion.getIdExp());
-
             }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Registro!!!");
@@ -1016,22 +1026,25 @@ public class miCompra extends javax.swing.JPanel {
 
     private void txtPCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPCKeyReleased
         System.out.println("traeImpuesto Nuevo: " + traeImpuesto);
-        if (traeImpuesto) {
-            System.out.println("no se calcula el precio con impuesto");
-            
+        if (!traeImpuesto) {
+            System.out.println("Debe calcularse el precio sin impuesto");
+            txtPCI.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPC.getText()))));
+
         } else {
             System.out.println("Se calcula el precio con impuesto");
-            txtPCI.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPC.getText()) * 1.16)).trim());
-            System.out.println("Prueba de caracter");
+
+            double precioCImp = Double.parseDouble(txtPC.getText());
+            for (Double impuesto : impuestos) {
+                precioCImp = precioCImp * impuesto;
+            }
+
+            txtPCI.setText(String.format("%10.2f", precioCImp));
 
             if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
                 System.out.println("Entro validación no enter");
-
-                System.out.println("Entro validación no nula");
                 calcularUtilidad();
-
             }
-            calcularPrecios(evt, false);
+            // calcularPrecios(evt, false);
         }
 
         //validar cuando el producto no cuenta con impuesto
@@ -1039,9 +1052,7 @@ public class miCompra extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPCKeyReleased
 
     public void calcularUtilidad() {
-        
         //txtPCI.setText(String.format("%10.2f", Double.parseDouble(txtPC.getText()) * 1.16).trim());
-
         System.out.println("PCI: " + txtPCI.getText());
         //txtPProtec.setText(String.format("%10.2f", Double.parseDouble(txtPCI.getText()) * 1.15).trim());
         lblPProtec.setText(utilidad(txtPProtec.getText().trim(), 1));
@@ -1056,7 +1067,6 @@ public class miCompra extends javax.swing.JPanel {
         lblPMax.setText(utilidad(txtPMax.getText().trim(), 1));
         System.out.println("precio maximo" + txtPMax.getText());
         //txtPVGP.setText(String.format("%10.2f", Double.parseDouble(txtPMax.getText()) / Double.parseDouble(txtCantPaq.getText())).trim());
-
     }
 
     public String utilidad(String valorPorcentual, int op) {
@@ -1223,21 +1233,21 @@ public class miCompra extends javax.swing.JPanel {
     }
 
     private void txtPCIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPCIKeyReleased
-        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
-            //txtPProtec.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPCI.getText()) * 1.15)).trim());
-            lblPProtec.setText(utilidad(txtPProtec.getText(), 1));
-            System.out.println("preio proteccion" + lblPProtec.getText());
-            //txtPMin.setText(String.format("%10.2f", Double.parseDouble(txtPCI.getText()) * 1.17).trim());
-            lblPMin.setText(utilidad(txtPMin.getText(), 1));
-            System.out.println("preio proteccion" + txtPMin.getText());
-            //txtPProm.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPCI.getText()) * 1.20)).trim());
-            lblPProm.setText(utilidad(txtPProm.getText(), 1));
-            System.out.println("preio proteccion" + txtPProm.getText());
-            //txtPMax.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPMin.getText()) * 1.25)).trim());
-            lblPMax.setText(utilidad(txtPMax.getText(), 1));
-            System.out.println("preio proteccion" + txtPMax.getText());
-            //txtPVGP.setText(String.format("%10.2f", Double.parseDouble(txtPMax.getText()) / Double.parseDouble(txtCantPaq.getText())).trim());
-        }
+        //if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+        //txtPProtec.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPCI.getText()) * 1.15)).trim());
+        lblPProtec.setText(utilidad(txtPProtec.getText(), 1));
+        System.out.println("preio proteccion" + lblPProtec.getText());
+        //txtPMin.setText(String.format("%10.2f", Double.parseDouble(txtPCI.getText()) * 1.17).trim());
+        lblPMin.setText(utilidad(txtPMin.getText(), 1));
+        System.out.println("preio proteccion" + txtPMin.getText());
+        //txtPProm.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPCI.getText()) * 1.20)).trim());
+        lblPProm.setText(utilidad(txtPProm.getText(), 1));
+        System.out.println("preio proteccion" + txtPProm.getText());
+        //txtPMax.setText(String.format("%10.2f", Math.rint(Double.parseDouble(txtPMin.getText()) * 1.25)).trim());
+        lblPMax.setText(utilidad(txtPMax.getText(), 1));
+        System.out.println("preio proteccion" + txtPMax.getText());
+        //txtPVGP.setText(String.format("%10.2f", Double.parseDouble(txtPMax.getText()) / Double.parseDouble(txtCantPaq.getText())).trim());
+        //   }
         calcularPrecios(evt, true);
     }//GEN-LAST:event_txtPCIKeyReleased
 
@@ -1281,6 +1291,14 @@ public class miCompra extends javax.swing.JPanel {
     private void txtIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDKeyPressed
+
+    private void txtPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPCActionPerformed
+
+    private void txtPCIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPCIActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPCIActionPerformed
 
     public void llenarTablaInvt(String fecha) {
 //        Vector datos = frmPrincipal.miConex.consultaExpendio(fecha);

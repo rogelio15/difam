@@ -19,7 +19,8 @@ public class panelVistaReportes extends javax.swing.JPanel {
             x.setFitWidthZoomRatio();
             add(x);
         } catch (Exception error) {
-            System.out.println("Mensaje de Error:  " + error.getMessage());
+            error.printStackTrace();
+            //System.out.println("Mensaje de Error:  " + error.getMessage());
         }
     }
 

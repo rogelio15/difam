@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="grafGananciaXMes" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="anio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select sum(gananciaEmpresa) as suma,concat(MONTH(v.fechaVenta),'/',YEAR(v.fechaVenta)) as Fecha from venta_producto vp inner join venta v on v.idventa=vp.idventa
+WHERE YEAR(v.fechaVenta) = $P{anio} and estadoVenta='1'
+GROUP BY MONTH(v.fechaVenta)]]>
+	</queryString>
+	<field name="suma" class="java.lang.Double"/>
+	<field name="Fecha" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="572" height="38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[GANANCIAS DEL AÑO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="110" y="0" width="344" height="20" backcolor="#EEEEEE"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="110" y="0" width="223" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[MES DE VENTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="0" width="121" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[MONTO VENDIDO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="333" y="0" width="97" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{suma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="223" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="110" y="19" width="344" height="1"/>
+			</line>
+			<line>
+				<reportElement x="454" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="110" y="0" width="1" height="20"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="572" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[NOTA: Los montos sumados en éste reporte corresponden a una suma mensual en el año seleccionado.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="283" splitType="Stretch">
+			<lineChart>
+				<chart>
+					<reportElement x="0" y="12" width="572" height="271"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<incrementWhenExpression><![CDATA[$P{anio}]]></incrementWhenExpression>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Ganancias"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{Fecha}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{suma}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>

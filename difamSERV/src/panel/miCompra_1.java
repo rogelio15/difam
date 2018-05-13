@@ -384,12 +384,17 @@ public class miCompra_1 extends javax.swing.JPanel {
         jLabel20.setText("Precio Protección:");
 
         txtPC.setFont(new java.awt.Font("Lao UI", 0, 11)); // NOI18N
-        txtPC.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPCKeyReleased(evt);
+        txtPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPCActionPerformed(evt);
             }
+        });
+        txtPC.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPCKeyTyped(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPCKeyReleased(evt);
             }
         });
 
@@ -810,7 +815,7 @@ public class miCompra_1 extends javax.swing.JPanel {
                             .addComponent(btnCorregir2)
                             .addComponent(btnCorregir3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTotal)
@@ -1012,6 +1017,10 @@ public class miCompra_1 extends javax.swing.JPanel {
     private void txtPPromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPPromActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPPromActionPerformed
+
+    private void txtPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPCActionPerformed
 
     public void llenarTablaInvt(String fecha) {
 //        Vector datos = frmPrincipal.miConex.consultaExpendio(fecha);

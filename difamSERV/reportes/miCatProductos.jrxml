@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[select * from PRODUCTO P INNER JOIN CATEGORIA C ON P.IDCATEGORIA = C.IDCATEGORIA;]]>
+	</queryString>
+	<field name="idProducto" class="java.lang.String"/>
+	<field name="codEmpresa" class="java.lang.String"/>
+	<field name="nombreProd" class="java.lang.String"/>
+	<field name="estado" class="java.lang.Boolean"/>
+	<field name="abreviado" class="java.lang.String"/>
+	<field name="unidadMedida" class="java.lang.String"/>
+	<field name="cantXUM" class="java.lang.Double"/>
+	<field name="existencia" class="java.lang.Double"/>
+	<field name="precioC" class="java.lang.Double"/>
+	<field name="precioProtec" class="java.lang.Double"/>
+	<field name="precioMin" class="java.lang.Double"/>
+	<field name="precioProm" class="java.lang.Double"/>
+	<field name="precioMax" class="java.lang.Double"/>
+	<field name="PrecioGenPV" class="java.lang.Double"/>
+	<field name="PrecioGen" class="java.lang.Double"/>
+	<field name="stockMin" class="java.lang.Double"/>
+	<field name="stockMax" class="java.lang.Double"/>
+	<field name="idMarca" class="java.lang.Long"/>
+	<field name="idUbicacion" class="java.lang.Long"/>
+	<field name="idCategoria" class="java.lang.Long"/>
+	<field name="nombreFam" class="java.lang.String"/>
+	<field name="fechaRegProd" class="java.sql.Date"/>
+	<field name="foto" class="java.lang.Object"/>
+	<field name="ultCantC" class="java.lang.Double"/>
+	<field name="ultPrecIC" class="java.lang.Double"/>
+	<field name="nombreCat" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="112" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="124" y="3" width="500" height="44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="34" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Lista de Productos en Sistema]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="124" y="47" width="500" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" isItalic="false" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Reporte de SisComecializadora DIFAM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="69" width="500" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[SERVICIOS DE SALUD DE OAXACA
+REGIMENESTATAL DE PROTECCION SOCIAL EN SALUD
+DIRECCION DE ATENCION MEDICA
+
+SOLICITUD DE MEDICAMENTOS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="4" y="4" width="131" height="100"/>
+				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.home") + "/DIFAM/Imagenes/cestacompra.png"]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="618" y="7" width="134" height="104"/>
+				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.home") + "/DIFAM/Imagenes/logodifam.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="30" width="63" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLAVE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="30" width="318" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DEL MEDICAMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="679" y="30" width="73" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXISTENCIA]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="47" width="752" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="2" width="793" height="24" forecolor="#B89F7D" backcolor="#F2EBDF"/>
+				<rectangle>
+					<reportElement mode="Opaque" x="21" y="0" width="36" height="24" backcolor="#736343"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement style="SubTitle" x="68" y="0" width="705" height="24" forecolor="#736343"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["LISTA DE PRODUCTOS EXISTENTES"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="606" y="30" width="73" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P. PROM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="533" y="30" width="73" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P. PROTEC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="30" width="73" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P. MAX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="30" width="73" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P. MIN]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="752" height="19"/>
+				<textField>
+					<reportElement x="3" y="1" width="64" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{idProducto}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="69" y="1" width="318" height="17"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreProd}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="679" y="1" width="73" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{existencia}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="606" y="1" width="73" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{precioProm}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="533" y="1" width="73" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{precioProtec}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="460" y="1" width="73" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{precioMax}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="387" y="1" width="73" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{precioMin}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="752" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="793" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="729" y="1" width="40" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="649" y="1" width="80" height="20" forecolor="#736343"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

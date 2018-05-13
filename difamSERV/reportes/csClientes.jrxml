@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[select R.descRuta,C.limiteMontoCred,concat(dcalleCli,',',dnoInt,',',dnoExt,',',coloniaCli,',',estadoCli), C.rfcCliente,IF(C.estadoCliente=1,"ACTIVO","INACTIVO"),concat(E.nombreEmp,' ',E.apellidoPatEmp,' ',E.apellidoMatEmp),C.idCliente,C.nombreCli,C.razonsocialcliente,C.poblacioncli,C.dias,C.horario,(SELECT IF(SUM(montoTotalV) IS NULL,0.00,SUM(montoTotalV)) FROM VENTA V WHERE V.idCliente=C.idCliente) AS TOTALC from cliente C inner join ruta_agente RA inner join empleado E inner join ruta R ON C.idR_A=RA.idR_A and RA.idEmpleado=E.idEmpleado and R.idruta=RA.idruta ORDER BY R.descRuta,TOTALC DESC;]]>
+	</queryString>
+	<field name="descRuta" class="java.lang.String"/>
+	<field name="limiteMontoCred" class="java.lang.Double"/>
+	<field name="concat(dcalleCli,&apos;,&apos;,dnoInt,&apos;,&apos;,dnoExt,&apos;,&apos;,coloniaCli,&apos;,&apos;,estadoCli)" class="java.lang.String"/>
+	<field name="rfcCliente" class="java.lang.String"/>
+	<field name="IF(C.estadoCliente=1,&quot;ACTIVO&quot;,&quot;INACTIVO&quot;)" class="java.lang.String"/>
+	<field name="concat(E.nombreEmp,&apos; &apos;,E.apellidoPatEmp,&apos; &apos;,E.apellidoMatEmp)" class="java.lang.String"/>
+	<field name="idCliente" class="java.lang.Long"/>
+	<field name="nombreCli" class="java.lang.String"/>
+	<field name="razonsocialcliente" class="java.lang.String"/>
+	<field name="poblacioncli" class="java.lang.String"/>
+	<field name="dias" class="java.lang.String"/>
+	<field name="horario" class="java.lang.String"/>
+	<field name="TOTALC" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="112" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="231" y="3" width="500" height="44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="34" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Lista de clientes segun ruta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="231" y="47" width="500" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" isItalic="false" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Reporte de SisComecializadora DIFAM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="231" y="69" width="500" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[SERVICIOS DE ABASTECIMIENTO
+
+A SUCURSALES Y ABARROTES]]></text>
+			</staticText>
+			<image>
+				<reportElement x="4" y="4" width="131" height="100"/>
+				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.home") + "/DIFAM/Imagenes/clienteShop.png"]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="797" y="4" width="170" height="104"/>
+				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.home") + "/DIFAM/Imagenes/logodifam.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="30" width="54" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLAVE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="30" width="258" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE CLIENTE & RAZON SOCIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="686" y="30" width="93" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POBLACION]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="47" width="968" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="2" width="1009" height="24" forecolor="#B89F7D" backcolor="#F2EBDF"/>
+				<rectangle>
+					<reportElement mode="Opaque" x="21" y="0" width="36" height="24" backcolor="#736343"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement style="SubTitle" x="68" y="0" width="705" height="24" forecolor="#736343"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["LISTA DE CLIENTES EN SISTEMA (MOSTRADOR Y REMISIONES)"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="564" y="30" width="122" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="495" y="30" width="70" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LIMITE CREDITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="30" width="84" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="30" width="95" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="779" y="30" width="73" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RFC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="910" y="30" width="58" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A/I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="852" y="30" width="58" height="20" forecolor="#736343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[T.COMPRADO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="38" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="968" height="38"/>
+				<textField>
+					<reportElement x="3" y="1" width="55" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{idCliente}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="58" y="1" width="258" height="17"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreCli}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="686" y="1" width="93" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{poblacioncli}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" x="564" y="1" width="122" height="35"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{concat(dcalleCli,',',dnoInt,',',dnoExt,',',coloniaCli,',',estadoCli)}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="495" y="1" width="70" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{limiteMontoCred}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" x="411" y="1" width="84" height="35"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{concat(E.nombreEmp,' ',E.apellidoPatEmp,' ',E.apellidoMatEmp)}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="316" y="1" width="95" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descRuta}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="58" y="19" width="258" height="17"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{razonsocialcliente}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="852" y="1" width="58" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{TOTALC}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement x="779" y="1" width="73" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rfcCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="910" y="1" width="58" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{IF(C.estadoCliente=1,"ACTIVO","INACTIVO")}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="968" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="1009" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="946" y="1" width="40" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="866" y="1" width="80" height="20" forecolor="#736343"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

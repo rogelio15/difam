@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="612" pageHeight="396" columnWidth="528" leftMargin="42" rightMargin="42" topMargin="42" bottomMargin="42">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idEmp" class="java.lang.String"/>
+	<parameter name="ventas" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select E.*,V.fechaVenta,V.idVenta,ADDDATE(V.fechaVenta,C.limitediascred) as fechaVence,curdate() as fechaActual,DATEDIFF(curdate(),ADDDATE(V.fechaVenta,C.limitediascred)) as dias,DATEDIFF('2016-03-13',ADDDATE(V.fechaVenta,C.limitediascred)) as dias1,V.gananciaVEmp from venta V inner join cliente C inner join ruta_agente RA inner join empleado E inner join ruta R ON C.idCliente=V.idCliente and C.idR_A=RA.idR_A and RA.idEmpleado=E.idEmpleado and R.idruta=RA.idruta where  idVenta in($P{ventas}) and E.idEmpleado=$P{idEmp};]]>
+	</queryString>
+	<field name="idEmpleado" class="java.lang.Long"/>
+	<field name="nombreEmp" class="java.lang.String"/>
+	<field name="apellidoPatEmp" class="java.lang.String"/>
+	<field name="apellidoMatEmp" class="java.lang.String"/>
+	<field name="fechaNacC" class="java.sql.Date"/>
+	<field name="direccionEmp" class="java.lang.String"/>
+	<field name="telefonoEmp" class="java.lang.String"/>
+	<field name="emailEmp" class="java.lang.String"/>
+	<field name="montoVentaPerm" class="java.lang.Double"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="fechaVenta" class="java.sql.Date"/>
+	<field name="idVenta" class="java.lang.Long"/>
+	<field name="fechaVence" class="java.sql.Date"/>
+	<field name="fechaActual" class="java.sql.Date"/>
+	<field name="dias" class="java.lang.Long"/>
+	<field name="dias1" class="java.lang.Long"/>
+	<field name="gananciaVEmp" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="528" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TICKET DE PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="423" y="65" width="105" height="18" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="423" y="31" width="105" height="18" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[NUM EMPLEADO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="423" y="48" width="104" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idEmpleado}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="423" y="31" width="1" height="33"/>
+			</line>
+			<line>
+				<reportElement x="527" y="32" width="1" height="67"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="190" y="31" width="233" height="18" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE PAGO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="48" width="233" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaVenta}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="189" y="31" width="1" height="34"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="190" y="31" width="338" height="1"/>
+			</line>
+			<line>
+				<reportElement x="190" y="48" width="337" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="423" y="82" width="90" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gananciaVEmp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="82" width="105" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="318" y="65" width="105" height="18" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="64" width="317" height="18" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE EMPLEADO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="82" width="317" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreEmp}+" "+$F{apellidoPatEmp}+" "+$F{apellidoMatEmp}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="83" width="528" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="99" width="528" height="1"/>
+			</line>
+			<line>
+				<reportElement x="318" y="65" width="1" height="33"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="423" y="64" width="1" height="36"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="1" y="63" width="528" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="64" width="1" height="35"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle radius="0">
+				<reportElement x="1" y="0" width="526" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="3" y="1" width="48" height="18" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="1" width="373" height="18" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONCEPTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="424" y="1" width="103" height="18" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COBRO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="50" y="1" width="1" height="18"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="423" y="1" width="1" height="18"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="51" y="0" width="372" height="17"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["GANANCIA POR VENTA #"+$F{idVenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="0" width="85" height="17"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gananciaVEmp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="0" width="49" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="426" y="1" width="8" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="51" splitType="Stretch">
+			<line>
+				<reportElement x="2" y="-1" width="526" height="1"/>
+			</line>
+			<line>
+				<reportElement x="2" y="50" width="526" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="0" width="527" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[NOMBRE Y FIRMA DE CONFORMIDAD DEL  EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="17" width="527" height="34"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Recibí de conformidad de COMERCIALIZADOTA DIFAM, el total de percepciones del periodo señalado en este recibo, que corresponde a las comisiones por venta realizada. Doy a la vez mi conformidad a los descuentos efectuados tanto de carácter oficial como privado.]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="424" y="6" width="89" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gananciaVEmp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="365" y="6" width="59" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Importe $:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="206" y="40" width="109" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>

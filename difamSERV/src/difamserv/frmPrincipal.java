@@ -57,7 +57,7 @@ public class frmPrincipal extends javax.swing.JFrame implements Runnable {
     public static SimpleDateFormat fHSQL = new SimpleDateFormat("hh:mm:ss");
     public static SimpleDateFormat fFSQL = new SimpleDateFormat("yyyy-MM-dd");
     public static operaTablas oT = new operaTablas();
-    public static String rutaRaiz = "C:\\SisPuntoVenta";
+    public static String rutaRaiz = "/SisPuntoVenta";
 
     public void run() {
         while (true) {

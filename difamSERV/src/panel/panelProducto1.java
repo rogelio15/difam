@@ -9,7 +9,6 @@ import difamserv.frmPrincipal;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.ImageIcon;
@@ -1393,17 +1392,20 @@ public class panelProducto1 extends javax.swing.JPanel {
 
                 if (respuesta) {
                     actualiza = false;
-                    ArrayList<Double> idImpuestos = null;
-                    idImpuestos = frmPrincipal.miConex.ObtenerImpuestos("where idProducto = '" + txtID.getText() + "'", 2);
-                    if (idImpuestos.size() > 1) {
-                        //actualizar
-                        //boolean respuesta
-
-                    } else {
-                        //insertar
-                        boolean res = frmPrincipal.miConex.insertarActualizarImpProd(idImpuestos, txtID.getText().toUpperCase());
-
-                    }
+                    
+                    
+                    
+//                    ArrayList<Double> idImpuestos = null;
+//                    idImpuestos = frmPrincipal.miConex.ObtenerImpuestos("where idProducto = '" + txtID.getText() + "'", 2);
+//                    if (idImpuestos.size() > 1) {
+//                        //actualizar
+//                        //boolean respuesta
+//                        
+//                    } else {
+//                        //insertar
+//                        boolean res = frmPrincipal.miConex.insertarActualizarImpProd(idImpuestos, txtID.getText().toUpperCase());
+//
+//                    }
 
                     JOptionPane.showMessageDialog(null, "EL registro se ha actualizado con exito!");
 
@@ -1539,7 +1541,6 @@ public class panelProducto1 extends javax.swing.JPanel {
                     int id = obtenerIdCombo(frmPrincipal.obtenID(cboImp).trim());
                     impuestos = frmPrincipal.miConex.ObtenerImpuestos("where idImpuesto = " + id + "", 1);
                     calcularPrecios(impuestos, 1);
-
                 }
                 //si solo es la opcion selecicone, no hay impuesto al producto.
                 if (!chkIVA.isSelected() && cboImp.getModel().getSelectedItem().toString().equals("SELECCIONE..")) {
@@ -1780,14 +1781,6 @@ public class panelProducto1 extends javax.swing.JPanel {
         
         return utilidad;
     }
-
-//    public String remmplazaCaracter(String campo) {
-//        String caracter = "";
-//        if (campo.contains(",")) {
-//            caracter = campo.replace(',', '.');
-//        }
-//        return caracter;
-//    }
 
     public static void actualizaCombo(JComboBox combo, boolean opc, Vector datos) {
         if (opc) {
