@@ -16,7 +16,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
 import javax.swing.table.*;
 
 public class panelProducto1 extends javax.swing.JPanel {
@@ -69,13 +68,11 @@ public class panelProducto1 extends javax.swing.JPanel {
         columnas.add("Existencia");
         columnas.add("Unidad Medida");
         columnas.add("Cant. U.M.");
-
         columnas.add("P. Compra");
         columnas.add("P. Min");
         columnas.add("P. Prom.");
         columnas.add("P. Max");
         columnas.add("P. PV Gral.");
-
         columnas.add("Stock Min.");
         columnas.add("Stock Max.");
         columnas.add("Desc. Marca");
@@ -1392,9 +1389,12 @@ public class panelProducto1 extends javax.swing.JPanel {
 
                 if (respuesta) {
                     actualiza = false;
+                  
                     
                     
                     
+                    
+//si se quita algun impuesto o se añade, entonces se debe recalcular el precio con impuesto                    
 //                    ArrayList<Double> idImpuestos = null;
 //                    idImpuestos = frmPrincipal.miConex.ObtenerImpuestos("where idProducto = '" + txtID.getText() + "'", 2);
 //                    if (idImpuestos.size() > 1) {

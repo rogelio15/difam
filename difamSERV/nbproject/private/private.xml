@@ -4,7 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/roge9010/Documents/proyectos/difam/difam/difamSERV/src/panel/panelProducto1.java</file>
-            <file>file:/Users/roge9010/Documents/proyectos/difam/difam/difamSERV/src/panel/miCompra.java</file>
+            <file>file:/Users/roge9010/Documents/proyectos/difam/difam/difamSERV/src/dialog/cobroEfectivo.java</file>
+            <file>file:/Users/roge9010/Documents/proyectos/difam/difam/difamSERV/src/panel/miVenta_1.java</file>
+            <file>file:/Users/roge9010/Documents/proyectos/difam/difam/difamSERV/src/difamserv/main.java</file>
+            <file>file:/Users/roge9010/Documents/proyectos/difam/difam/difamSERV/src/conexiones/consultasMySQL.java</file>
+            <file>file:/Users/roge9010/Documents/proyectos/difam/difam/difamSERV/src/difamserv/hiloMail.java</file>
+            <file>file:/Users/roge9010/Documents/proyectos/difam/difam/difamSERV/src/conexiones/conexionMySQL.java</file>
         </group>
     </open-files>
 </project-private>

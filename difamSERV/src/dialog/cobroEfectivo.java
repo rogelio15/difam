@@ -140,7 +140,7 @@ public class cobroEfectivo extends javax.swing.JDialog {
             //aqui es donde se realiza el calculo para saber la ganacia
             celdas.add("5");
             //harcodeado
-            celdas.add("5");
+            //celdas.add("5");
             filas.add(celdas);
           
         }

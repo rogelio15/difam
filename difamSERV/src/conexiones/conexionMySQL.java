@@ -855,8 +855,8 @@ public class conexionMySQL {
                 for (int i = 0; i < datos.size(); i++) {
                     Vector celdas = (Vector) datos.get(i);
              
-                    System.out.println("INSERT INTO venta_producto VALUES(null," + celdas.get(1) + "," + celdas.get(2) + ",'" + idVC + "','" + celdas.get(0) + "','" + celdas.get(3) + "','" + celdas.get(4) + "');");
-                    ejecutaSQL.executeUpdate("INSERT INTO venta_producto VALUES(null," + celdas.get(1) + "," + celdas.get(2) + ",'" + idVC + "','" + celdas.get(0) + "','" + celdas.get(3) + "','" + celdas.get(4) + "');");
+                    System.out.println("INSERT INTO venta_producto VALUES(null," + celdas.get(1) + "," + celdas.get(2) + ",'" + idVC + "','" + celdas.get(0) + "','" + celdas.get(3) + "');");
+                    ejecutaSQL.executeUpdate("INSERT INTO venta_producto VALUES(null," + celdas.get(1) + "," + celdas.get(2) + ",'" + idVC + "','" + celdas.get(0) + "','" + celdas.get(3) + "');");
                     ejecutaSQL.executeUpdate("UPDATE producto SET  existencia_pieza= existencia_pieza-" + celdas.get(1) + " WHERE idProducto='" + celdas.get(0) + "'");
                   
                 }
@@ -881,7 +881,8 @@ public class conexionMySQL {
             }
 
         } catch (SQLException ex) {
-            //Logger.getLogger(conexionMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(conexionMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return idVC;
     }

@@ -2,8 +2,10 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" columnDirection="RTL" pageWidth="226" pageHeight="212" columnWidth="214" leftMargin="5" rightMargin="7" topMargin="8" bottomMargin="20" isIgnorePagination="true">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
-	<parameter name="noVenta" class="java.lang.String"/>
+	<property name="ireport.y" value="112"/>
+	<parameter name="noVenta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select * from venta_producto inner join venta using(idventa) inner join producto using(idproducto) inner join empleado using(idempleado) inner join cliente using(idcliente) where idventa = $P{noVenta};]]>
 	</queryString>
@@ -152,6 +154,7 @@ RFC: AOBZ590812I52]]></text>
 			</staticText>
 			<image hAlign="Center">
 				<reportElement x="0" y="14" width="107" height="33"/>
+				<imageExpression><![CDATA["/DIFAM/Imagenes/DIFAM.png"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="0" y="45" width="214" height="1"/>

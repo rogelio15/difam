@@ -19,13 +19,11 @@ public class main {
     public static void main(String[] args) {
         try {
             
-           // String feel = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
-            
-          //UIManager.setLookAndFeel("swing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel(feel);
+           //String feel = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel"; 
+           //UIManager.setLookAndFeel(feel);
 
-            UIManager.setLookAndFeel(
-            UIManager.getCrossPlatformLookAndFeelClassName());
+           UIManager.setLookAndFeel(
+           UIManager.getCrossPlatformLookAndFeelClassName());
             
         } catch (Exception e) {
             e.printStackTrace();
